@@ -6,7 +6,7 @@
 
 <title>Marianne & Xavier</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Cormorant+Garamond:wght@300&family=Great+Vibes&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300&family=Great+Vibes&display=swap" rel="stylesheet">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -15,135 +15,127 @@
   --red:#9E1B1B;
   --yellow:#F6D96B;
   --beige:#F3E6D6;
-  --cream:#FFF8EE;
-  --ink:#3e2a1f;
+  --ink:#2c1f17;
 }
 
 body{
   height:100vh;
   overflow:hidden;
-  font-family:'Cormorant Garamond',serif;
-  background:var(--beige);
+  font-family:'Inter',sans-serif;
+  background:black;
 }
 
-/* CURTAINS */
-#stage{
+/* ---------- INTRO (M & X) ---------- */
+#intro{
   position:fixed;
   inset:0;
-  z-index:10;
-  cursor:pointer;
-}
-
-.curtain{
-  position:absolute;
-  width:50%;
-  height:100%;
-  top:0;
-  transition:transform 2s cubic-bezier(.77,0,.18,1);
-  box-shadow: inset 0 0 80px rgba(0,0,0,0.3);
-}
-
-.curtain-left{
-  left:0;
-  background:linear-gradient(90deg,#5c0f0f,var(--red));
-}
-.curtain-right{
-  right:0;
-  background:linear-gradient(-90deg,#5c0f0f,var(--red));
-}
-
-#stage.open .curtain-left{
-  transform:translateX(-115%);
-}
-#stage.open .curtain-right{
-  transform:translateX(115%);
-}
-
-/* SCENE */
-#scene{
-  position:fixed;
-  inset:0;
+  background:#000;
   display:flex;
   align-items:center;
   justify-content:center;
-  flex-direction:column;
-  opacity:0;
-  transition:1.2s;
-  background:radial-gradient(circle,var(--cream),var(--beige));
+  z-index:20;
+  cursor:pointer;
+  transition:opacity 1s ease;
 }
-#scene.visible{opacity:1;}
 
-/* ATMOSPHERE */
+#intro.fade{
+  opacity:0;
+  pointer-events:none;
+}
+
+.monogram{
+  font-family:'Great Vibes',cursive;
+  font-size:6rem;
+  color:var(--yellow);
+  opacity:0;
+  transform:scale(0.9);
+  animation:fadeIn 1s ease forwards;
+}
+
+@keyframes fadeIn{
+  to{opacity:1; transform:scale(1);}
+}
+
+/* ---------- SCENE ---------- */
+#scene{
+  position:fixed;
+  inset:0;
+  background:
+    linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.4)),
+    url('castle.jpg') center/cover no-repeat;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  opacity:0;
+  transform:scale(1.05);
+  transition:opacity 1.2s ease, transform 1.2s ease;
+}
+
+#scene.visible{
+  opacity:1;
+  transform:scale(1);
+}
+
+/* subtle cinematic grain */
 #scene::after{
   content:"";
   position:absolute;
   inset:0;
-  background:
-    radial-gradient(circle at center,transparent 60%,rgba(0,0,0,0.1)),
-    url('https://grainy-gradients.vercel.app/noise.svg');
-  opacity:.25;
-  pointer-events:none;
+  background:url('https://grainy-gradients.vercel.app/noise.svg');
+  opacity:.2;
 }
 
-/* CHATEAU */
-#chateau{
-  width:min(90vw,1000px);
-  margin-bottom:2rem;
-}
-
-/* layers for depth */
-.wall{fill:#e6d2b3;}
-.shadow{fill:#d9c2a0;}
-.roof{fill:#7b2a2a;}
-.window{fill:#fff5e6;stroke:#8a6a4f;stroke-width:1}
-
-/* TEXT */
+/* ---------- TEXT ---------- */
 #text{
+  position:relative;
   text-align:center;
-  color:var(--ink);
-  z-index:2;
+  color:white;
+  max-width:800px;
+  padding:20px;
 }
 
-.top-line{
+/* small top line */
+.top{
   letter-spacing:.4em;
   font-size:.65rem;
+  opacity:.8;
   margin-bottom:1rem;
-  opacity:.7;
 }
 
-/* NAMES */
+/* names */
 .names{
   font-family:'Playfair Display',serif;
-  font-size:3.5rem;
+  font-size:4.5rem;
+  font-weight:500;
+  line-height:1.1;
 }
 
-/* AMPERSAND */
 .amp{
+  color:var(--red);
   font-family:'Great Vibes',cursive;
-  color:var(--red);
-  font-size:2.8rem;
+  font-size:3rem;
 }
 
-/* MAIN TITLE */
+/* SAVE THE DATE = HERO */
 .save{
-  margin-top:.8rem;
-  font-size:1.2rem;
-  letter-spacing:.35em;
-  color:var(--red);
-}
-
-/* DATE */
-.date{
   margin-top:1rem;
-  letter-spacing:.2em;
-  font-size:.85rem;
+  font-size:1.2rem;
+  letter-spacing:.5em;
+  color:var(--yellow);
 }
 
-/* PLACE */
+/* date */
+.date{
+  margin-top:1.5rem;
+  font-size:.9rem;
+  letter-spacing:.3em;
+}
+
+/* place */
 .place{
-  margin-top:.5rem;
+  margin-top:.6rem;
   font-size:.8rem;
-  opacity:.6;
+  opacity:.7;
 }
 
 </style>
@@ -151,75 +143,37 @@ body{
 
 <body>
 
-<!-- CURTAINS -->
-<div id="stage">
-  <div class="curtain curtain-left"></div>
-  <div class="curtain curtain-right"></div>
+<!-- INTRO -->
+<div id="intro">
+  <div class="monogram">M & X</div>
 </div>
 
-<!-- SCENE -->
+<!-- MAIN SCENE -->
 <div id="scene">
+  <div id="text">
+    <div class="top">NOUS NOUS MARIONS</div>
 
-<!-- IMPROVED CASTLE -->
-<svg id="chateau" viewBox="0 0 900 500">
+    <div class="names">
+      Marianne <span class="amp">&</span> Xavier
+    </div>
 
-<!-- shadows -->
-<rect x="250" y="230" width="400" height="190" class="shadow"/>
+    <div class="save">SAVE THE DATE</div>
 
-<!-- main -->
-<rect x="250" y="220" width="400" height="200" class="wall"/>
-
-<!-- towers -->
-<rect x="200" y="250" width="80" height="170" class="wall"/>
-<rect x="620" y="250" width="80" height="170" class="wall"/>
-
-<!-- roofs -->
-<polygon points="200,250 240,170 280,250" class="roof"/>
-<polygon points="620,250 660,170 700,250" class="roof"/>
-<polygon points="250,220 450,150 650,220" class="roof"/>
-
-<!-- windows -->
-<rect x="320" y="260" width="40" height="50" class="window"/>
-<rect x="450" y="260" width="40" height="50" class="window"/>
-<rect x="380" y="310" width="40" height="50" class="window"/>
-
-<!-- door -->
-<rect x="420" y="330" width="60" height="90" class="window"/>
-
-</svg>
-
-<!-- TEXT -->
-<div id="text">
-  <div class="top-line">NOUS NOUS MARIONS</div>
-
-  <div class="names">
-    Marianne <span class="amp">&</span> Xavier
+    <div class="date">SAMEDI 29 MAI 2027</div>
+    <div class="place">Quelque part en France</div>
   </div>
-
-  <div class="save">SAVE THE DATE</div>
-
-  <div class="date">SAMEDI 29 MAI 2027</div>
-  <div class="place">Quelque part en France</div>
-</div>
-
 </div>
 
 <script>
-let opened = false;
-
-const stage = document.getElementById('stage');
+const intro = document.getElementById('intro');
 const scene = document.getElementById('scene');
 
-stage.addEventListener('click', () => {
-  if(opened) return;
-  opened = true;
-
-  stage.classList.add('open');
-  scene.classList.add('visible');
+intro.addEventListener('click', () => {
+  intro.classList.add('fade');
 
   setTimeout(()=>{
-    stage.style.pointerEvents = 'none';
-  }, 2000);
+    scene.classList.add('visible');
+  }, 300);
 });
 </script>
 
