@@ -6,6 +6,8 @@
 
 <title>Marianne & Xavier</title>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300&family=Great+Vibes&display=swap" rel="stylesheet">
 
 <style>
@@ -14,18 +16,17 @@
 :root{
   --red:#9E1B1B;
   --yellow:#F6D96B;
-  --beige:#F3E6D6;
   --ink:#2c1f17;
 }
 
 body{
-  height:100vh;
-  overflow:hidden;
+  min-height:100vh;
+  overflow-x:hidden;
   font-family:'Inter',sans-serif;
   background:black;
 }
 
-/* ---------- INTRO (M & X) ---------- */
+/* ---------- INTRO ---------- */
 #intro{
   position:fixed;
   inset:0;
@@ -38,6 +39,14 @@ body{
   transition:opacity 1s ease;
 }
 
+#intro::after{
+  content:"Cliquer pour entrer";
+  position:absolute;
+  bottom:40px;
+  font-size:.8rem;
+  opacity:.6;
+}
+
 #intro.fade{
   opacity:0;
   pointer-events:none;
@@ -45,7 +54,7 @@ body{
 
 .monogram{
   font-family:'Great Vibes',cursive;
-  font-size:6rem;
+  font-size:clamp(3rem,10vw,6rem);
   color:var(--yellow);
   opacity:0;
   transform:scale(0.9);
@@ -74,9 +83,14 @@ body{
 #scene.visible{
   opacity:1;
   transform:scale(1);
+  animation:slowZoom 20s ease forwards;
 }
 
-/* subtle cinematic grain */
+@keyframes slowZoom{
+  from{background-size:100%;}
+  to{background-size:110%;}
+}
+
 #scene::after{
   content:"";
   position:absolute;
@@ -92,9 +106,16 @@ body{
   color:white;
   max-width:800px;
   padding:20px;
+  opacity:0;
+  transform:translateY(20px);
+  transition:opacity 1s ease .4s, transform 1s ease .4s;
 }
 
-/* small top line */
+#scene.visible #text{
+  opacity:1;
+  transform:translateY(0);
+}
+
 .top{
   letter-spacing:.4em;
   font-size:.65rem;
@@ -102,10 +123,9 @@ body{
   margin-bottom:1rem;
 }
 
-/* names */
 .names{
   font-family:'Playfair Display',serif;
-  font-size:4.5rem;
+  font-size:clamp(2.5rem,6vw,4.5rem);
   font-weight:500;
   line-height:1.1;
 }
@@ -116,65 +136,77 @@ body{
   font-size:3rem;
 }
 
-/* SAVE THE DATE = HERO */
 .save{
   margin-top:1rem;
   font-size:1.2rem;
-  letter-spacing:.5em;
+  letter-spacing:clamp(.2em,1vw,.5em);
   color:var(--yellow);
 }
 
-/* date */
 .date{
   margin-top:1.5rem;
   font-size:.9rem;
   letter-spacing:.3em;
 }
 
-/* place */
 .place{
   margin-top:.6rem;
   font-size:.8rem;
   opacity:.7;
 }
-
 </style>
 </head>
 
 <body>
 
 <!-- INTRO -->
-<div id="intro">
+<div id="intro" tabindex="0" role="button" aria-label="Entrer">
   <div class="monogram">M & X</div>
 </div>
 
-<!-- MAIN SCENE -->
-<div id="scene">
-  <div id="text">
+<!-- MAIN -->
+<main id="scene">
+  <section id="text">
     <div class="top">NOUS NOUS MARIONS</div>
 
-    <div class="names">
+    <h1 class="names">
       Marianne <span class="amp">&</span> Xavier
-    </div>
+    </h1>
 
     <div class="save">SAVE THE DATE</div>
 
     <div class="date">SAMEDI 29 MAI 2027</div>
     <div class="place">Quelque part en France</div>
-  </div>
-</div>
+  </section>
+</main>
 
 <script>
 const intro = document.getElementById('intro');
 const scene = document.getElementById('scene');
 
-intro.addEventListener('click', () => {
+function enterSite(){
   intro.classList.add('fade');
-
   setTimeout(()=>{
     scene.classList.add('visible');
-  }, 300);
+  },300);
+}
+
+// Click
+intro.addEventListener('click', enterSite);
+
+// Keyboard access
+intro.addEventListener('keydown', (e)=>{
+  if(e.key === 'Enter' || e.key === ' '){
+    enterSite();
+  }
 });
+
+// Auto الدخول after 2s
+setTimeout(()=>{
+  if(!scene.classList.contains('visible')){
+    enterSite();
+  }
+},2000);
 </script>
 
 </body>
