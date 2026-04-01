@@ -5,56 +5,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Marianne & Xavier – Robernier</title>
 <style>
-body {
-  margin:0;
-  font-family:'Inter', sans-serif;
-  background:#f3e6d6;
-  overflow:hidden;
-}
+body { margin:0; font-family:'Inter', sans-serif; background:#f3e6d6; overflow:hidden; }
 
 /* Curtains */
 #curtain-left, #curtain-right {
-  position:fixed;
-  top:0;
-  width:50%;
-  height:100%;
-  background:#9E1B1B;
-  z-index:20;
+  position:fixed; top:0; width:50%; height:100%; background:#9E1B1B; z-index:20;
   transition: transform 2s ease;
 }
-
 #curtain-left { left:0; transform:translateX(0); }
 #curtain-right { right:0; transform:translateX(0); }
 
 /* Castle SVG */
-#castle {
-  position:absolute;
-  top:15%;
-  left:50%;
-  transform:translateX(-50%);
-  width:70%;
-  height:auto;
-}
-
-#castle path, #castle line, #castle polygon {
-  stroke:#2c1f17;
-  stroke-width:2;
-  fill:none;
-  stroke-dasharray: 4000;
-  stroke-dashoffset: 4000;
-  transition: stroke-dashoffset 6s linear;
-}
+#castle { position:absolute; top:10%; left:50%; transform:translateX(-50%); width:75%; height:auto; }
+#castle path, #castle line, #castle polygon, #castle rect { stroke:#2c1f17; stroke-width:2; fill:none; stroke-dasharray:4000; stroke-dashoffset:4000; transition: stroke-dashoffset 6s linear; }
 
 /* Text */
-#text {
-  position:absolute;
-  width:100%;
-  text-align:center;
-  top:75%;
-  opacity:0;
-  transition: opacity 2s ease;
-}
-
+#text { position:absolute; width:100%; text-align:center; top:75%; opacity:0; transition: opacity 2s ease; }
 .names { font-size:3rem; font-family:'Playfair Display', serif; color:#2c1f17; }
 .save, .date { font-size:1.2rem; color:#F6D96B; margin-top:0.5rem; }
 </style>
@@ -66,22 +32,31 @@ body {
 <div id="curtain-right"></div>
 
 <!-- Detailed Hand-Drawn SVG of Château de Robernier -->
-<svg id="castle" viewBox="0 0 1000 600">
+<svg id="castle" viewBox="0 0 1200 700">
   <!-- Main walls -->
-  <rect x="200" y="300" width="600" height="250" stroke="#2c1f17" fill="none"/>
-  <!-- Towers -->
-  <polygon points="200,300 220,200 240,300" stroke="#2c1f17" fill="none"/>
-  <polygon points="780,300 800,200 820,300" stroke="#2c1f17" fill="none"/>
+  <rect x="250" y="300" width="700" height="300" />
+  <!-- Left tower -->
+  <polygon points="250,300 280,180 310,300" />
+  <polygon points="265,180 275,140 285,180" /> <!-- battlements -->
+  <!-- Right tower -->
+  <polygon points="950,300 980,180 1010,300" />
+  <polygon points="965,180 975,140 985,180" /> <!-- battlements -->
+  <!-- Central towers -->
+  <polygon points="500,300 530,170 560,300" />
+  <polygon points="700,300 730,170 760,300" />
   <!-- Roofs -->
-  <polygon points="300,300 400,180 500,300" stroke="#2c1f17" fill="none"/>
-  <polygon points="500,300 600,180 700,300" stroke="#2c1f17" fill="none"/>
+  <polygon points="300,300 450,200 600,300" />
+  <polygon points="600,300 750,200 900,300" />
+  <!-- Roof tiles (lines) -->
+  <line x1="310" y1="280" x2="440" y2="210" />
+  <line x1="320" y1="270" x2="460" y2="200" />
   <!-- Windows -->
-  <line x1="250" y1="350" x2="250" y2="450" stroke="#2c1f17"/>
-  <line x1="350" y1="350" x2="350" y2="450" stroke="#2c1f17"/>
-  <line x1="450" y1="350" x2="450" y2="450" stroke="#2c1f17"/>
-  <line x1="550" y1="350" x2="550" y2="450" stroke="#2c1f17"/>
-  <line x1="650" y1="350" x2="650" y2="450" stroke="#2c1f17"/>
-  <line x1="750" y1="350" x2="750" y2="450" stroke="#2c1f17"/>
+  <line x1="300" y1="350" x2="300" y2="450" />
+  <line x1="400" y1="350" x2="400" y2="450" />
+  <line x1="500" y1="350" x2="500" y2="450" />
+  <line x1="600" y1="350" x2="600" y2="450" />
+  <line x1="700" y1="350" x2="700" y2="450" />
+  <line x1="800" y1="350" x2="800" y2="450" />
 </svg>
 
 <!-- Text -->
@@ -98,27 +73,22 @@ const castle = document.getElementById('castle');
 const text = document.getElementById('text');
 
 function startAnimation(){
-  // slide curtains and keep pinned
+  // Curtains slide out and stay
   leftCurtain.style.transform = 'translateX(-100%)';
   rightCurtain.style.transform = 'translateX(100%)';
   leftCurtain.style.pointerEvents = 'none';
   rightCurtain.style.pointerEvents = 'none';
 
-  // animate castle drawing
+  // Castle drawing animation
   const paths = castle.querySelectorAll('path, line, polygon, rect');
-  paths.forEach((el, i)=>{
-    setTimeout(()=>{
-      el.style.strokeDashoffset = 0;
-    }, i*200);
+  paths.forEach((el, i) => {
+    setTimeout(() => { el.style.strokeDashoffset = 0; }, i*150);
   });
 
-  // reveal text after castle animation
-  setTimeout(()=>{
-    text.style.opacity = 1;
-  }, 4000);
+  // Reveal text after castle drawn
+  setTimeout(() => { text.style.opacity = 1; }, 4000);
 }
 
-// start on click
 document.body.addEventListener('click', startAnimation);
 </script>
 
