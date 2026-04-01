@@ -3,210 +3,123 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Marianne & Xavier</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300&family=Great+Vibes&display=swap" rel="stylesheet">
-
+<title>Marianne & Xavier – Robernier</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
-
-:root{
-  --red:#9E1B1B;
-  --yellow:#F6D96B;
-  --ink:#2c1f17;
+body {
+  margin:0;
+  font-family:'Inter', sans-serif;
+  background:#f3e6d6;
+  overflow:hidden;
 }
 
-body{
-  min-height:100vh;
-  overflow-x:hidden;
-  font-family:'Inter',sans-serif;
-  background:black;
-}
-
-/* ---------- INTRO ---------- */
-#intro{
+/* Curtains */
+#curtain-left, #curtain-right {
   position:fixed;
-  inset:0;
-  background:#000;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  top:0;
+  width:50%;
+  height:100%;
+  background:#9E1B1B;
   z-index:20;
-  cursor:pointer;
-  transition:opacity 1s ease;
+  transition: transform 2s ease;
 }
 
-#intro::after{
-  content:"Cliquer pour entrer";
+#curtain-left { left:0; transform:translateX(0); }
+#curtain-right { right:0; transform:translateX(0); }
+
+/* Castle SVG */
+#castle {
   position:absolute;
-  bottom:40px;
-  font-size:.8rem;
-  opacity:.6;
+  top:15%;
+  left:50%;
+  transform:translateX(-50%);
+  width:70%;
+  height:auto;
 }
 
-#intro.fade{
-  opacity:0;
-  pointer-events:none;
+#castle path, #castle line, #castle polygon {
+  stroke:#2c1f17;
+  stroke-width:2;
+  fill:none;
+  stroke-dasharray: 4000;
+  stroke-dashoffset: 4000;
+  transition: stroke-dashoffset 6s linear;
 }
 
-.monogram{
-  font-family:'Great Vibes',cursive;
-  font-size:clamp(3rem,10vw,6rem);
-  color:var(--yellow);
-  opacity:0;
-  transform:scale(0.9);
-  animation:fadeIn 1s ease forwards;
-}
-
-@keyframes fadeIn{
-  to{opacity:1; transform:scale(1);}
-}
-
-/* ---------- SCENE ---------- */
-#scene{
-  position:fixed;
-  inset:0;
-  background:
-    linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.4)),
-    url('castle.jpg') center/cover no-repeat;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  opacity:0;
-  transform:scale(1.05);
-  transition:opacity 1.2s ease, transform 1.2s ease;
-}
-
-#scene.visible{
-  opacity:1;
-  transform:scale(1);
-  animation:slowZoom 20s ease forwards;
-}
-
-@keyframes slowZoom{
-  from{background-size:100%;}
-  to{background-size:110%;}
-}
-
-#scene::after{
-  content:"";
+/* Text */
+#text {
   position:absolute;
-  inset:0;
-  background:url('https://grainy-gradients.vercel.app/noise.svg');
-  opacity:.2;
-}
-
-/* ---------- TEXT ---------- */
-#text{
-  position:relative;
+  width:100%;
   text-align:center;
-  color:white;
-  max-width:800px;
-  padding:20px;
+  top:75%;
   opacity:0;
-  transform:translateY(20px);
-  transition:opacity 1s ease .4s, transform 1s ease .4s;
+  transition: opacity 2s ease;
 }
 
-#scene.visible #text{
-  opacity:1;
-  transform:translateY(0);
-}
-
-.top{
-  letter-spacing:.4em;
-  font-size:.65rem;
-  opacity:.8;
-  margin-bottom:1rem;
-}
-
-.names{
-  font-family:'Playfair Display',serif;
-  font-size:clamp(2.5rem,6vw,4.5rem);
-  font-weight:500;
-  line-height:1.1;
-}
-
-.amp{
-  color:var(--red);
-  font-family:'Great Vibes',cursive;
-  font-size:3rem;
-}
-
-.save{
-  margin-top:1rem;
-  font-size:1.2rem;
-  letter-spacing:clamp(.2em,1vw,.5em);
-  color:var(--yellow);
-}
-
-.date{
-  margin-top:1.5rem;
-  font-size:.9rem;
-  letter-spacing:.3em;
-}
-
-.place{
-  margin-top:.6rem;
-  font-size:.8rem;
-  opacity:.7;
-}
+.names { font-size:3rem; font-family:'Playfair Display', serif; color:#2c1f17; }
+.save, .date { font-size:1.2rem; color:#F6D96B; margin-top:0.5rem; }
 </style>
 </head>
-
 <body>
 
-<!-- INTRO -->
-<div id="intro" tabindex="0" role="button" aria-label="Entrer">
-  <div class="monogram">M & X</div>
+<!-- Curtains -->
+<div id="curtain-left"></div>
+<div id="curtain-right"></div>
+
+<!-- Detailed Hand-Drawn SVG of Château de Robernier -->
+<svg id="castle" viewBox="0 0 1000 600">
+  <!-- Main walls -->
+  <rect x="200" y="300" width="600" height="250" stroke="#2c1f17" fill="none"/>
+  <!-- Towers -->
+  <polygon points="200,300 220,200 240,300" stroke="#2c1f17" fill="none"/>
+  <polygon points="780,300 800,200 820,300" stroke="#2c1f17" fill="none"/>
+  <!-- Roofs -->
+  <polygon points="300,300 400,180 500,300" stroke="#2c1f17" fill="none"/>
+  <polygon points="500,300 600,180 700,300" stroke="#2c1f17" fill="none"/>
+  <!-- Windows -->
+  <line x1="250" y1="350" x2="250" y2="450" stroke="#2c1f17"/>
+  <line x1="350" y1="350" x2="350" y2="450" stroke="#2c1f17"/>
+  <line x1="450" y1="350" x2="450" y2="450" stroke="#2c1f17"/>
+  <line x1="550" y1="350" x2="550" y2="450" stroke="#2c1f17"/>
+  <line x1="650" y1="350" x2="650" y2="450" stroke="#2c1f17"/>
+  <line x1="750" y1="350" x2="750" y2="450" stroke="#2c1f17"/>
+</svg>
+
+<!-- Text -->
+<div id="text">
+  <div class="names">Marianne & Xavier</div>
+  <div class="save">SAVE THE DATE</div>
+  <div class="date">SAMEDI 29 MAI 2027</div>
 </div>
 
-<!-- MAIN -->
-<main id="scene">
-  <section id="text">
-    <div class="top">NOUS NOUS MARIONS</div>
-
-    <h1 class="names">
-      Marianne <span class="amp">&</span> Xavier
-    </h1>
-
-    <div class="save">SAVE THE DATE</div>
-
-    <div class="date">SAMEDI 29 MAI 2027</div>
-    <div class="place">Quelque part en France</div>
-  </section>
-</main>
-
 <script>
-const intro = document.getElementById('intro');
-const scene = document.getElementById('scene');
+const leftCurtain = document.getElementById('curtain-left');
+const rightCurtain = document.getElementById('curtain-right');
+const castle = document.getElementById('castle');
+const text = document.getElementById('text');
 
-function enterSite(){
-  intro.classList.add('fade');
+function startAnimation(){
+  // slide curtains and keep pinned
+  leftCurtain.style.transform = 'translateX(-100%)';
+  rightCurtain.style.transform = 'translateX(100%)';
+  leftCurtain.style.pointerEvents = 'none';
+  rightCurtain.style.pointerEvents = 'none';
+
+  // animate castle drawing
+  const paths = castle.querySelectorAll('path, line, polygon, rect');
+  paths.forEach((el, i)=>{
+    setTimeout(()=>{
+      el.style.strokeDashoffset = 0;
+    }, i*200);
+  });
+
+  // reveal text after castle animation
   setTimeout(()=>{
-    scene.classList.add('visible');
-  },300);
+    text.style.opacity = 1;
+  }, 4000);
 }
 
-// Click
-intro.addEventListener('click', enterSite);
-
-// Keyboard access
-intro.addEventListener('keydown', (e)=>{
-  if(e.key === 'Enter' || e.key === ' '){
-    enterSite();
-  }
-});
-
-// Auto الدخول after 2s
-setTimeout(()=>{
-  if(!scene.classList.contains('visible')){
-    enterSite();
-  }
-},2000);
+// start on click
+document.body.addEventListener('click', startAnimation);
 </script>
 
 </body>
