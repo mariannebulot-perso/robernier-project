@@ -5,29 +5,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <title>Marianne &amp; Xavier · 29 Mai 2027</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --red:    #C2271C;
-      --yellow: #D9AE45;
-      --gold:   #B8901E;
-      --dark:   #0f0804;
-      --cream:  #EFE3C8;
+      --red:    #C93B1E;
+      --yellow: #EDD82A;
+      --beige:  #F5EDDA;
+      --beige2: #E8D9BC;
+      --ink:    #3A1A08;
     }
 
     html, body {
       height: 100%;
       width: 100%;
       overflow: hidden;
-      background: var(--dark);
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      color: var(--cream);
+      background: var(--beige);
+      font-family: 'Dancing Script', cursive;
+      color: var(--ink);
     }
 
     /* ═══════════════════════════
-       CURTAIN STAGE
+       RIDEAUX
     ═══════════════════════════ */
     #stage {
       position: fixed;
@@ -38,14 +38,14 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-    /* Gold top rail */
+    /* Tringle en haut */
     #stage::before {
       content: '';
       position: absolute;
       top: 0; left: 0; right: 0;
-      height: 7px;
+      height: 6px;
       background: linear-gradient(90deg,
-        #6B4E0A 0%, #C49A2E 20%, #D9AE45 50%, #C49A2E 80%, #6B4E0A 100%);
+        #7A3A08 0%, #C93B1E 25%, #EDD82A 50%, #C93B1E 75%, #7A3A08 100%);
       z-index: 25;
     }
 
@@ -54,50 +54,40 @@
       top: 0;
       height: 100%;
       width: 51%;
-      transition: transform 1.9s cubic-bezier(0.77, 0, 0.18, 1);
+      transition: transform 2s cubic-bezier(0.77, 0, 0.18, 1);
       will-change: transform;
-      overflow: hidden;
     }
 
-    /* Fold shading lines */
     .curtain::before,
     .curtain::after {
       content: '';
       position: absolute;
       top: 0; bottom: 0;
       width: 1px;
-      background: rgba(0,0,0,0.15);
       z-index: 1;
     }
 
     .curtain-left {
       left: 0;
       background: linear-gradient(95deg,
-        #5C0E0E 0%, #8B1515 18%, #C2271C 40%,
-        #A61F1F 62%, #881818 82%, #5C0E0E 100%);
+        #6B1208 0%, #9E2010 18%, #C93B1E 42%,
+        #B03218 65%, #8A1E0E 84%, #6B1208 100%);
     }
-    .curtain-left::before  { left: 28%; }
-    .curtain-left::after   { left: 58%; }
+    .curtain-left::before  { left: 28%;  background: rgba(255,255,255,0.05); }
+    .curtain-left::after   { left: 58%;  background: rgba(0,0,0,0.12); }
 
     .curtain-right {
       right: 0;
       background: linear-gradient(-95deg,
-        #5C0E0E 0%, #8B1515 18%, #C2271C 40%,
-        #A61F1F 62%, #881818 82%, #5C0E0E 100%);
+        #6B1208 0%, #9E2010 18%, #C93B1E 42%,
+        #B03218 65%, #8A1E0E 84%, #6B1208 100%);
     }
-    .curtain-right::before { right: 28%; }
-    .curtain-right::after  { right: 58%; }
-
-    /* Curtain fabric sheen */
-    .curtain-left::before  { background: rgba(255,255,255,0.04); }
-    .curtain-right::before { background: rgba(255,255,255,0.04); }
-    .curtain-left::after   { background: rgba(0,0,0,0.12); }
-    .curtain-right::after  { background: rgba(0,0,0,0.12); }
+    .curtain-right::before { right: 28%; background: rgba(255,255,255,0.05); }
+    .curtain-right::after  { right: 58%; background: rgba(0,0,0,0.12); }
 
     #stage.open .curtain-left  { transform: translateX(-103%); }
     #stage.open .curtain-right { transform: translateX(103%); }
 
-    /* Center monogram & call to action */
     .stage-cta {
       position: absolute;
       left: 50%; top: 50%;
@@ -108,30 +98,28 @@
     }
 
     .stage-monogram {
-      font-size: clamp(3.2rem, 9vw, 6.5rem);
-      font-weight: 300;
+      font-size: clamp(3.5rem, 10vw, 7rem);
+      font-weight: 700;
       color: var(--yellow);
-      letter-spacing: 0.1em;
-      text-shadow: 0 0 40px rgba(217,174,69,0.4);
+      text-shadow: 0 0 35px rgba(237,216,42,0.45);
       animation: breathe 3s ease-in-out infinite;
       line-height: 1;
     }
 
     .stage-hint {
-      margin-top: 1em;
-      font-size: clamp(0.6rem, 1.8vw, 0.78rem);
-      letter-spacing: 0.35em;
-      text-transform: uppercase;
-      color: rgba(239,227,200,0.6);
+      margin-top: 0.9em;
+      font-size: clamp(0.8rem, 2vw, 1rem);
+      letter-spacing: 0.18em;
+      color: rgba(245,237,218,0.7);
     }
 
     @keyframes breathe {
-      0%, 100% { opacity: 0.82; transform: scale(1); }
-      50%       { opacity: 1;    transform: scale(1.025); }
+      0%, 100% { opacity: 0.8;  transform: scale(1); }
+      50%       { opacity: 1;   transform: scale(1.03); }
     }
 
     /* ═══════════════════════════
-       MAIN SCENE
+       SCÈNE PRINCIPALE
     ═══════════════════════════ */
     #scene {
       position: fixed;
@@ -140,12 +128,12 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: clamp(1rem, 3vh, 2rem) 1rem clamp(1rem, 3vh, 2rem);
-      background: radial-gradient(ellipse 80% 70% at 50% 55%,
-        #1c1006 0%, #0f0804 100%);
+      padding: clamp(1rem, 3vh, 2rem) 1rem;
+      background: radial-gradient(ellipse 90% 80% at 50% 50%,
+        var(--beige) 0%, var(--beige2) 100%);
       opacity: 0;
-      transition: opacity 0.7s ease 0.6s;
-      gap: clamp(0.5rem, 1.5vh, 1.2rem);
+      transition: opacity 0.7s ease 0.5s;
+      gap: clamp(0.4rem, 1.2vh, 1rem);
     }
 
     #scene.visible { opacity: 1; }
@@ -161,14 +149,14 @@
 
     #chateau .sk {
       fill: none;
-      stroke: var(--yellow);
-      stroke-width: 1.5;
+      stroke: var(--red);
+      stroke-width: 1.8;
       stroke-linecap: round;
       stroke-linejoin: round;
     }
 
     /* ═══════════════════════════
-       TEXT BLOCK
+       TEXTE
     ═══════════════════════════ */
     #text-block {
       text-align: center;
@@ -183,18 +171,16 @@
     }
 
     .names {
-      font-size: clamp(1.15rem, 4vw, 2.6rem);
-      font-weight: 300;
-      color: var(--cream);
-      letter-spacing: 0.04em;
-      line-height: 1.35;
+      font-size: clamp(1.4rem, 4.5vw, 3rem);
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: 0.02em;
+      line-height: 1.3;
     }
 
     .amp {
       color: var(--red);
-      font-style: italic;
       font-size: 1.15em;
-      line-height: 1;
       display: inline-block;
       margin: 0 0.1em;
     }
@@ -203,65 +189,65 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 0.7em;
-      margin: 0.4em 0;
+      gap: 0.6em;
+      margin: 0.35em 0;
     }
 
     .ornament::before,
     .ornament::after {
       content: '';
       display: block;
-      width: clamp(40px, 10vw, 90px);
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      width: clamp(35px, 9vw, 85px);
+      height: 1.5px;
+      background: linear-gradient(90deg, transparent, var(--red), transparent);
     }
 
-    .ornament-diamond {
-      color: var(--yellow);
-      font-size: 0.45rem;
-      opacity: 0.9;
+    .ornament-dot {
+      width: 7px; height: 7px;
+      background: var(--yellow);
+      border-radius: 50%;
+      display: inline-block;
+      flex-shrink: 0;
     }
 
     .save-the-date {
-      font-style: italic;
-      font-size: clamp(0.95rem, 2.8vw, 1.5rem);
+      font-size: clamp(1.1rem, 3.2vw, 1.8rem);
+      font-weight: 600;
       color: var(--red);
-      letter-spacing: 0.06em;
+      letter-spacing: 0.04em;
     }
 
     .date-line {
-      font-size: clamp(0.6rem, 1.8vw, 0.85rem);
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--cream);
-      margin-top: 0.3em;
-      opacity: 0.85;
+      font-size: clamp(0.85rem, 2.2vw, 1.1rem);
+      font-weight: 400;
+      color: var(--ink);
+      margin-top: 0.25em;
+      opacity: 0.8;
     }
 
     .mystery {
-      font-size: clamp(0.52rem, 1.4vw, 0.68rem);
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: rgba(239, 227, 200, 0.35);
-      margin-top: 0.8em;
+      font-size: clamp(0.7rem, 1.6vw, 0.88rem);
+      font-weight: 400;
+      color: rgba(58,26,8,0.45);
+      margin-top: 0.7em;
       font-style: italic;
+      letter-spacing: 0.05em;
     }
 
     /* ═══════════════════════════
-       SOUND TOGGLE
+       BOUTON SON
     ═══════════════════════════ */
     #sound-btn {
       position: fixed;
-      bottom: 1.2rem;
+      bottom: 1.1rem;
       right: 1.2rem;
       background: none;
-      border: 1px solid rgba(239,227,200,0.22);
-      color: rgba(239,227,200,0.4);
-      padding: 0.38rem 0.85rem;
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 0.62rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
+      border: 1px solid rgba(58,26,8,0.2);
+      color: rgba(58,26,8,0.4);
+      padding: 0.35rem 0.8rem;
+      font-family: 'Dancing Script', cursive;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
       cursor: pointer;
       z-index: 50;
       opacity: 0;
@@ -271,13 +257,10 @@
 
     #sound-btn.visible { opacity: 1; }
     #sound-btn:hover {
-      color: rgba(239,227,200,0.75);
-      border-color: rgba(239,227,200,0.45);
+      color: rgba(58,26,8,0.7);
+      border-color: rgba(58,26,8,0.4);
     }
 
-    /* ═══════════════════════════
-       SMALL SCREEN OVERFLOW
-    ═══════════════════════════ */
     @media (max-height: 560px) {
       html, body { overflow-y: auto; }
       #scene { position: relative; min-height: 100vh; }
@@ -286,31 +269,25 @@
 </head>
 <body>
 
-<!-- ═══ CURTAIN STAGE ═══ -->
-<div id="stage" role="button" aria-label="Ouvrir / Open">
+<!-- ═══ RIDEAUX ═══ -->
+<div id="stage" role="button" aria-label="Ouvrir">
   <div class="curtain curtain-left"></div>
   <div class="curtain curtain-right"></div>
   <div class="stage-cta">
     <div class="stage-monogram">M &amp; X</div>
-    <div class="stage-hint">Ouvrir &nbsp;·&nbsp; Open</div>
+    <div class="stage-hint">Toucher pour ouvrir</div>
   </div>
 </div>
 
-<!-- ═══ MAIN SCENE ═══ -->
+<!-- ═══ SCÈNE ═══ -->
 <div id="scene">
 
-  <!--
-    CHÂTEAU SKETCH — SVG animated stroke-dashoffset
-    Based on the Château de Robernier, Var, France
-    Elements drawn in sequence: driveway → balustrade → building → towers → windows → door → trees
-  -->
   <svg id="chateau" viewBox="0 0 800 340" xmlns="http://www.w3.org/2000/svg" aria-label="Illustration du château">
 
-    <!-- ── Driveway ── -->
+    <!-- Allée -->
     <g id="g-drive">
       <line class="sk" x1="322" y1="340" x2="366" y2="264"/>
       <line class="sk" x1="478" y1="340" x2="434" y2="264"/>
-      <!-- gravel texture -->
       <path class="sk" d="M 334 326 Q 345 323 358 326"/>
       <path class="sk" d="M 355 310 Q 368 307 381 310"/>
       <path class="sk" d="M 419 310 Q 432 307 445 310"/>
@@ -318,12 +295,10 @@
       <path class="sk" d="M 462 315 Q 470 313 478 315"/>
     </g>
 
-    <!-- ── Balustrade ── -->
+    <!-- Balustrade -->
     <g id="g-balu">
-      <!-- top and bottom rails -->
       <line class="sk" x1="172" y1="264" x2="628" y2="264"/>
       <line class="sk" x1="175" y1="277" x2="625" y2="277"/>
-      <!-- pillars -->
       <path class="sk" d="
         M 186,264 L 186,277  M 204,264 L 204,277  M 222,264 L 222,277  M 240,264 L 240,277
         M 258,264 L 258,277  M 276,264 L 276,277  M 294,264 L 294,277  M 312,264 L 312,277
@@ -334,86 +309,67 @@
       "/>
     </g>
 
-    <!-- ── Gate posts ── -->
+    <!-- Piliers du portail -->
     <g id="g-gate">
       <line class="sk" x1="366" y1="264" x2="366" y2="245"/>
       <line class="sk" x1="434" y1="264" x2="434" y2="245"/>
       <line class="sk" x1="361" y1="245" x2="371" y2="245"/>
       <line class="sk" x1="429" y1="245" x2="439" y2="245"/>
-      <!-- post finials -->
       <path class="sk" d="M 363 245 L 366 239 L 369 245"/>
       <path class="sk" d="M 431 245 L 434 239 L 437 245"/>
     </g>
 
-    <!-- ── Main building outline ── -->
+    <!-- Corps du château -->
     <g id="g-bldg-shell">
       <path class="sk" d="M 302 264 L 302 122 L 498 122 L 498 264"/>
-      <!-- roofline band -->
       <line class="sk" x1="294" y1="122" x2="506" y2="122"/>
       <line class="sk" x1="297" y1="117" x2="503" y2="117"/>
     </g>
 
-    <!-- ── Main building windows ── -->
+    <!-- Fenêtres corps principal -->
     <g id="g-bldg-win">
-      <!-- Top floor — 2 windows -->
       <path class="sk" d="M 330 134 L 330 152 L 355 152 L 355 134 Q 342 126 330 134"/>
       <path class="sk" d="M 445 134 L 445 152 L 470 152 L 470 134 Q 457 126 445 134"/>
-
-      <!-- 2nd floor — 3 arched windows -->
       <path class="sk" d="M 316 166 L 316 196 L 348 196 L 348 166 Q 332 156 316 166"/>
       <path class="sk" d="M 384 166 L 384 196 L 416 196 L 416 166 Q 400 156 384 166"/>
       <path class="sk" d="M 452 166 L 452 196 L 484 196 L 484 166 Q 468 156 452 166"/>
-
-      <!-- Shutters 2nd floor -->
       <line class="sk" x1="311" y1="168" x2="314" y2="196"/>
       <line class="sk" x1="350" y1="168" x2="353" y2="196"/>
       <line class="sk" x1="379" y1="168" x2="382" y2="196"/>
       <line class="sk" x1="418" y1="168" x2="421" y2="196"/>
       <line class="sk" x1="447" y1="168" x2="450" y2="196"/>
       <line class="sk" x1="486" y1="168" x2="489" y2="196"/>
-
-      <!-- 1st floor — 2 side windows -->
       <path class="sk" d="M 316 210 L 316 240 L 348 240 L 348 210 Q 332 201 316 210"/>
       <path class="sk" d="M 452 210 L 452 240 L 484 240 L 484 210 Q 468 201 452 210"/>
-
-      <!-- Shutters 1st floor -->
       <line class="sk" x1="311" y1="212" x2="314" y2="240"/>
       <line class="sk" x1="350" y1="212" x2="353" y2="240"/>
       <line class="sk" x1="447" y1="212" x2="450" y2="240"/>
       <line class="sk" x1="486" y1="212" x2="489" y2="240"/>
     </g>
 
-    <!-- ── Central arched door ── -->
+    <!-- Porte centrale -->
     <g id="g-door">
       <path class="sk" d="M 382 264 L 382 238 Q 400 226 418 238 L 418 264"/>
       <line class="sk" x1="375" y1="264" x2="425" y2="264"/>
-      <!-- door step -->
       <line class="sk" x1="371" y1="268" x2="429" y2="268"/>
     </g>
 
-    <!-- ── Left tower ── -->
+    <!-- Tour gauche -->
     <g id="g-tower-l">
-      <!-- Body sides -->
       <line class="sk" x1="214" y1="264" x2="214" y2="154"/>
       <line class="sk" x1="302" y1="264" x2="302" y2="154"/>
-      <!-- Ellipse top (roundness hint) -->
       <path class="sk" d="M 214 154 Q 258 146 302 154"/>
-      <!-- Conical roof -->
       <path class="sk" d="M 212 157 L 258 84 L 304 157"/>
-      <!-- Finial -->
       <path class="sk" d="M 255 86 L 258 76 L 261 86"/>
-      <!-- Upper arched window -->
       <path class="sk" d="M 238 175 L 238 196 L 278 196 L 278 175 Q 258 164 238 175"/>
-      <!-- Lower arched window -->
       <path class="sk" d="M 238 213 L 238 242 L 278 242 L 278 213 Q 258 203 238 213"/>
-      <!-- Shutters -->
       <line class="sk" x1="233" y1="177" x2="236" y2="196"/>
       <line class="sk" x1="280" y1="177" x2="283" y2="196"/>
       <line class="sk" x1="233" y1="215" x2="236" y2="242"/>
       <line class="sk" x1="280" y1="215" x2="283" y2="242"/>
     </g>
 
-    <!-- ── Right tower ── -->
+    <!-- Tour droite -->
     <g id="g-tower-r">
       <line class="sk" x1="498" y1="264" x2="498" y2="154"/>
       <line class="sk" x1="586" y1="264" x2="586" y2="154"/>
@@ -428,36 +384,29 @@
       <line class="sk" x1="564" y1="215" x2="567" y2="242"/>
     </g>
 
-    <!-- ── Trees ── -->
+    <!-- Arbres -->
     <g id="g-trees">
-      <!-- Far-left tall tree (bare, winter feel) -->
       <line class="sk" x1="134" y1="264" x2="134" y2="165"/>
       <path class="sk" d="M 134 200 Q 116 188 102 178"/>
       <path class="sk" d="M 134 186 Q 122 173 114 160"/>
       <path class="sk" d="M 134 175 Q 146 163 154 150"/>
       <path class="sk" d="M 134 218 Q 122 212 112 205"/>
       <path class="sk" d="M 134 228 Q 148 222 158 216"/>
-
-      <!-- Left shrub near tower -->
       <line class="sk" x1="174" y1="264" x2="174" y2="243"/>
       <path class="sk" d="M 158 252 Q 174 235 190 252"/>
       <path class="sk" d="M 162 243 Q 174 228 186 243"/>
-
-      <!-- Far-right tall tree -->
       <line class="sk" x1="666" y1="264" x2="666" y2="165"/>
       <path class="sk" d="M 666 200 Q 684 188 698 178"/>
       <path class="sk" d="M 666 186 Q 678 173 686 160"/>
       <path class="sk" d="M 666 175 Q 654 163 646 150"/>
       <path class="sk" d="M 666 218 Q 678 212 688 205"/>
       <path class="sk" d="M 666 228 Q 652 222 642 216"/>
-
-      <!-- Right shrub near tower -->
       <line class="sk" x1="626" y1="264" x2="626" y2="243"/>
       <path class="sk" d="M 610 252 Q 626 235 642 252"/>
       <path class="sk" d="M 614 243 Q 626 228 638 243"/>
     </g>
 
-    <!-- ── Ground ── -->
+    <!-- Ligne du sol -->
     <g id="g-ground">
       <line class="sk" x1="100" y1="264" x2="320" y2="264"/>
       <line class="sk" x1="480" y1="264" x2="700" y2="264"/>
@@ -465,146 +414,144 @@
 
   </svg>
 
-  <!-- Text reveal -->
+  <!-- Texte -->
   <div id="text-block">
     <div class="names">
       Marianne Bulot <span class="amp">&amp;</span> Xavier Burghardt
     </div>
     <div class="ornament">
-      <span class="ornament-diamond">◆</span>
+      <span class="ornament-dot"></span>
     </div>
     <div class="save-the-date">Save the Date</div>
-    <div class="date-line">
-      Samedi 29 Mai 2027 &nbsp;·&nbsp; Saturday, 29<sup>th</sup> May 2027
-    </div>
-    <div class="mystery">
-      Quelque part en France &nbsp;·&nbsp; Somewhere in France
-    </div>
+    <div class="date-line">Samedi 29 Mai 2027</div>
+    <div class="mystery">Quelque part en France…</div>
   </div>
 
 </div>
 
-<!-- Sound toggle -->
-<button id="sound-btn" aria-label="Toggle music">♩ Son · Sound</button>
+<!-- Bouton son -->
+<button id="sound-btn" aria-label="Musique on/off">♩ Musique</button>
 
 <script>
 'use strict';
 
-/* ═══════════════════════════════════════════
-   PIANO  — Web Audio API synthesis
-═══════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════
+   PIANO DOUX — synthèse Web Audio (ondes sinus)
+   Mélodie lente et apaisante, ~54 BPM
+═══════════════════════════════════════════════ */
 let _ctx   = null;
 let _on    = false;
 let _timer = null;
+let _master = null;
 
-// Frequencies (Hz)
 const F = {
-  C3:130.81, D3:146.83, E3:164.81, F3:174.61, G3:196.00, A3:220.00, B3:246.94,
-  C4:261.63, D4:293.66, E4:329.63, F4:349.23, G4:392.00, A4:440.00, B4:493.88,
-  C5:523.25, D5:587.33, E5:659.25
+  C3:130.81, D3:146.83, E3:164.81, F3:174.61,
+  G3:196.00, A3:220.00, B3:246.94,
+  C4:261.63, D4:293.66, E4:329.63, F4:349.23,
+  G4:392.00, A4:440.00, B4:493.88,
+  C5:523.25, D5:587.33, E5:659.25, G5:783.99
 };
 
-const BPM   = 76;                         // gentle waltz tempo
-const BEAT  = 60 / BPM;                  // seconds per beat
+const BPM  = 54;
+const BEAT = 60 / BPM;
 
-// ── Melody (right hand) — G major, romantic waltz feel ──────────────────
-// [note, beat-start, beat-duration]
 const RH = [
-  // Phrase A
-  ['D5', 0,   1.5], ['C5', 1.5, 0.75], ['B4', 2.25, 0.75],
-  ['A4', 3,   1.5], ['G4', 4.5, 1.5],
-  ['A4', 6,   0.75],['B4', 6.75,0.75], ['C5', 7.5, 0.75], ['D5', 8.25, 0.75],
-  ['E5', 9,   1.5], ['D5', 10.5,0.75], ['C5', 11.25,0.75],
-  ['B4', 12,  2.25],['A4', 14.25,0.75],
-  ['G4', 15,  3],
-
-  // Phrase B
-  ['B4', 18,  1.5], ['A4', 19.5,0.75], ['G4', 20.25,0.75],
-  ['F4', 21,  1.5], ['E4', 22.5,1.5],
-  ['F4', 24,  0.75],['G4', 24.75,0.75],['A4', 25.5, 0.75],['B4', 26.25,0.75],
-  ['C5', 27,  1.5], ['B4', 28.5,0.75], ['A4', 29.25,0.75],
-  ['G4', 30,  2.25],['F4', 32.25,0.75],
-  ['G4', 33,  3],
+  ['E5', 0,   2.5], ['D5', 2.5, 1.5], ['C5', 4,   4],
+  ['E5', 8,   2],   ['G5', 10,  1.5], ['E5', 11.5,1.5], ['D5', 13,  5],
+  ['C5', 18,  2.5], ['B4', 20.5,1.5], ['A4', 22,  4],
+  ['C5', 26,  2],   ['E5', 28,  1.5], ['D5', 29.5,1.5], ['C5', 31,  5],
+  ['A4', 36,  2.5], ['B4', 38.5,1.5], ['C5', 40,  4],
+  ['A4', 44,  2],   ['G4', 46,  1.5], ['F4', 47.5,1.5], ['E4', 49,  5],
+  ['F4', 54,  2.5], ['G4', 56.5,1.5], ['A4', 58,  2],
+  ['G4', 60,  1.5], ['F4', 61.5,1.5], ['E4', 63,  2],
+  ['D4', 65,  1.5], ['C4', 66.5,7.5],
 ];
 
-// ── Accompaniment (left hand) — waltz arpeggio ──────────────────────────
-function lhChord(root, mid, top, startBeat, bars) {
-  const notes = [];
+function buildLH(root, mid, top, start, bars) {
+  const out = [];
   for (let b = 0; b < bars * 3; b += 3) {
-    notes.push(
-      [root, startBeat + b,        0.5],
-      [mid,  startBeat + b + 0.75, 0.5],
-      [top,  startBeat + b + 1.5,  0.5],
-      [mid,  startBeat + b + 2.25, 0.5]
+    out.push(
+      [root, start + b,        0.6],
+      [mid,  start + b + 0.9,  0.6],
+      [top,  start + b + 1.8,  0.6],
+      [mid,  start + b + 2.4,  0.4]
     );
   }
-  return notes;
+  return out;
 }
 
 const LH = [
-  ...lhChord('G3','B3','D4', 0,  3),  // G  (bars 1-3)
-  ...lhChord('E3','G3','B3', 9,  2),  // Em
-  ...lhChord('C3','E3','G3', 15, 1),  // C
-  ...lhChord('G3','B3','D4', 18, 3),  // G  (bars 7-9)
-  ...lhChord('C3','E3','G3', 27, 2),  // C
-  ...lhChord('D3','F3','A3', 33, 1),  // D  (simplified — no F#)
+  ...buildLH('C3','E3','G3',  0, 6),
+  ...buildLH('A3','C4','E4', 18, 6),
+  ...buildLH('F3','A3','C4', 36, 6),
+  ...buildLH('G3','B3','D4', 54, 6),
+  ...buildLH('C3','E3','G3', 72, 2),
 ];
 
-const LOOP_BEATS = 36;
+const LOOP_BEATS = 74;
 
-function piano(freq, when, durBeats, vol) {
-  const o  = _ctx.createOscillator();
-  const o2 = _ctx.createOscillator();
-  const g  = _ctx.createGain();
+function initAudio() {
+  if (_ctx) return;
+  _ctx = new (window.AudioContext || window.webkitAudioContext)();
+  _master = _ctx.createGain();
+  _master.gain.value = 0.85;
+  const delay   = _ctx.createDelay(1.0);
+  const fbGain  = _ctx.createGain();
+  const wetGain = _ctx.createGain();
+  delay.delayTime.value = 0.28;
+  fbGain.gain.value     = 0.22;
+  wetGain.gain.value    = 0.18;
+  delay.connect(fbGain);
+  fbGain.connect(delay);
+  _master.connect(delay);
+  delay.connect(wetGain);
+  wetGain.connect(_ctx.destination);
+  _master.connect(_ctx.destination);
+}
 
-  o.type       = 'triangle';
-  o.frequency.value = freq;
-  o2.type      = 'sine';
-  o2.frequency.value = freq * 2.0005;  // slight octave for warmth
-
+function note(freq, when, durBeats, vol) {
   const durS = durBeats * BEAT;
+  const g = _ctx.createGain();
+  [[1, 1.0], [2, 0.18], [3, 0.06]].forEach(([mult]) => {
+    const o = _ctx.createOscillator();
+    o.type = 'sine';
+    o.frequency.value = freq * mult;
+    o.connect(g);
+    o.start(when);
+    o.stop(when + durS * 5);
+  });
   g.gain.setValueAtTime(0, when);
-  g.gain.linearRampToValueAtTime(vol, when + 0.01);
-  g.gain.setTargetAtTime(vol * 0.45, when + 0.015, 0.07);
-  g.gain.exponentialRampToValueAtTime(0.0001, when + durS * 3.5);
-
-  o.connect(g); o2.connect(g); g.connect(_ctx.destination);
-  o.start(when);  o.stop(when + durS * 4);
-  o2.start(when); o2.stop(when + durS * 4);
+  g.gain.linearRampToValueAtTime(vol, when + 0.04);
+  g.gain.setTargetAtTime(vol * 0.25, when + 0.05, 0.25);
+  g.gain.exponentialRampToValueAtTime(0.0001, when + durS * 5);
+  g.connect(_master);
 }
 
 function scheduleLoop(t0) {
   if (!_on) return;
-
-  RH.forEach(([note, beat, dur]) => {
-    piano(F[note], t0 + beat * BEAT, dur, 0.20);
-  });
-  LH.forEach(([note, beat, dur]) => {
-    piano(F[note], t0 + beat * BEAT, dur, 0.08);
-  });
-
-  const next   = t0 + LOOP_BEATS * BEAT;
-  const waitMs = (next - _ctx.currentTime - 0.4) * 1000;
-  _timer = setTimeout(() => { if (_on) scheduleLoop(next); }, waitMs);
+  RH.forEach(([n, beat, dur]) => note(F[n], t0 + beat * BEAT, dur, 0.16));
+  LH.forEach(([n, beat, dur]) => note(F[n], t0 + beat * BEAT, dur, 0.06));
+  const next = t0 + LOOP_BEATS * BEAT;
+  _timer = setTimeout(() => { if (_on) scheduleLoop(next); },
+    (next - _ctx.currentTime - 0.5) * 1000);
 }
 
 function startPiano() {
-  if (!_ctx) _ctx = new (window.AudioContext || window.webkitAudioContext)();
+  initAudio();
   if (_ctx.state === 'suspended') _ctx.resume();
   _on = true;
-  scheduleLoop(_ctx.currentTime + 0.12);
+  scheduleLoop(_ctx.currentTime + 0.15);
 }
 
 function stopPiano() {
   _on = false;
   clearTimeout(_timer);
-  if (_ctx) { _ctx.close(); _ctx = null; }
+  if (_ctx) { _ctx.close(); _ctx = null; _master = null; }
 }
 
-
-/* ═══════════════════════════════════════════
-   SVG DRAW ANIMATION — stroke-dashoffset
-═══════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════
+   ANIMATION SVG — stroke-dashoffset
+═══════════════════════════════════════════════ */
 function pathLen(el) {
   if (el.tagName === 'line') {
     const dx = el.x2.baseVal.value - el.x1.baseVal.value;
@@ -614,34 +561,25 @@ function pathLen(el) {
   return el.getTotalLength ? el.getTotalLength() : 300;
 }
 
-function armGroup(id) {
-  const g = document.getElementById(id);
-  if (!g) return [];
-  const els = [...g.querySelectorAll('path, line, ellipse')];
-  els.forEach(el => {
-    const len = pathLen(el);
-    el.style.strokeDasharray  = len;
-    el.style.strokeDashoffset = len;
-  });
-  return els;
-}
-
 function drawGroup(id, delay, pxPerSec) {
-  const els = armGroup(id);
-  let groupEnd = delay;
+  const g = document.getElementById(id);
+  if (!g) return delay;
+  const els = [...g.querySelectorAll('path, line')];
+  let end = delay;
   els.forEach((el, i) => {
     const len = pathLen(el);
-    const dur = Math.max(0.35, len / pxPerSec);
-    const t   = delay + i * 0.09;
-    if (t + dur > groupEnd) groupEnd = t + dur;
+    const dur = Math.max(0.3, len / pxPerSec);
+    const t   = delay + i * 0.08;
+    if (t + dur > end) end = t + dur;
+    el.style.strokeDasharray  = len;
+    el.style.strokeDashoffset = len;
     el.style.transition = `stroke-dashoffset ${dur.toFixed(2)}s ease ${t.toFixed(2)}s`;
     requestAnimationFrame(() => { el.style.strokeDashoffset = 0; });
   });
-  return groupEnd;
+  return end;
 }
 
-function runDrawAnimation() {
-  // [group-id, delay (s), drawing-speed (px/s)]
+function runAnimation() {
   const plan = [
     ['g-drive',      0.0,  160],
     ['g-balu',       0.9,  380],
@@ -654,62 +592,44 @@ function runDrawAnimation() {
     ['g-trees',      4.0,  200],
     ['g-ground',     4.2,  340],
   ];
-
-  let lastEnd = 0;
+  let last = 0;
   plan.forEach(([id, delay, speed]) => {
-    const end = drawGroup(id, delay, speed);
-    if (end > lastEnd) lastEnd = end;
+    const e = drawGroup(id, delay, speed);
+    if (e > last) last = e;
   });
-
-  // Reveal text block after drawing completes
   setTimeout(() => {
     document.getElementById('text-block').classList.add('visible');
-  }, (lastEnd + 0.5) * 1000);
+  }, (last + 0.6) * 1000);
 }
 
-
-/* ═══════════════════════════════════════════
-   CURTAIN — click / tap to open
-═══════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════
+   OUVERTURE DES RIDEAUX
+═══════════════════════════════════════════════ */
 let _opened = false;
 
-function openCurtains() {
+function ouvrir() {
   if (_opened) return;
   _opened = true;
-
   startPiano();
-
-  const stage = document.getElementById('stage');
-  const scene = document.getElementById('scene');
-  const btn   = document.getElementById('sound-btn');
-
-  stage.classList.add('open');
-  scene.classList.add('visible');
-
-  // Start drawing once curtains are half-open
-  setTimeout(runDrawAnimation, 950);
-
-  // Show sound toggle & remove stage from pointer events
+  document.getElementById('stage').classList.add('open');
+  document.getElementById('scene').classList.add('visible');
+  setTimeout(runAnimation, 1000);
   setTimeout(() => {
-    btn.classList.add('visible');
-    stage.style.display = 'none';
-  }, 2400);
+    document.getElementById('sound-btn').classList.add('visible');
+    document.getElementById('stage').style.display = 'none';
+  }, 2500);
 }
 
-document.getElementById('stage').addEventListener('click',    openCurtains);
-document.getElementById('stage').addEventListener('touchend', e => { e.preventDefault(); openCurtains(); });
+document.getElementById('stage').addEventListener('click',    ouvrir);
+document.getElementById('stage').addEventListener('touchend', e => { e.preventDefault(); ouvrir(); });
 
-
-/* ═══════════════════════════════════════════
-   SOUND BUTTON
-═══════════════════════════════════════════ */
 document.getElementById('sound-btn').addEventListener('click', function () {
   if (_on) {
     stopPiano();
-    this.textContent = '♩ Son · Sound (off)';
+    this.textContent = '♩ Musique (off)';
   } else {
     startPiano();
-    this.textContent = '♩ Son · Sound';
+    this.textContent = '♩ Musique';
   }
 });
 </script>
