@@ -38,7 +38,7 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-    /* Tringle en haut */
+    /* Tringle dorée en haut */
     #stage::before {
       content: '';
       position: absolute;
@@ -203,6 +203,9 @@
     }
 
     .ornament-dot {
+      color: var(--yellow);
+      font-size: 0.5rem;
+      /* filled circle as accent */
       width: 7px; height: 7px;
       background: var(--yellow);
       border-radius: 50%;
@@ -437,13 +440,15 @@
 
 /* ═══════════════════════════════════════════════
    PIANO DOUX — synthèse Web Audio (ondes sinus)
-   Mélodie lente et apaisante, ~54 BPM
+   Mélodie lente et apaisante en Do majeur, ~54 BPM
 ═══════════════════════════════════════════════ */
 let _ctx   = null;
 let _on    = false;
 let _timer = null;
 let _master = null;
+let _echo   = null;
 
+// Fréquences des notes
 const F = {
   C3:130.81, D3:146.83, E3:164.81, F3:174.61,
   G3:196.00, A3:220.00, B3:246.94,
@@ -453,20 +458,49 @@ const F = {
 };
 
 const BPM  = 54;
-const BEAT = 60 / BPM;
+const BEAT = 60 / BPM; // ~1.11 s par temps
 
+// Mélodie (main droite) — lente, espacée, lyrique
 const RH = [
-  ['E5', 0,   2.5], ['D5', 2.5, 1.5], ['C5', 4,   4],
-  ['E5', 8,   2],   ['G5', 10,  1.5], ['E5', 11.5,1.5], ['D5', 13,  5],
-  ['C5', 18,  2.5], ['B4', 20.5,1.5], ['A4', 22,  4],
-  ['C5', 26,  2],   ['E5', 28,  1.5], ['D5', 29.5,1.5], ['C5', 31,  5],
-  ['A4', 36,  2.5], ['B4', 38.5,1.5], ['C5', 40,  4],
-  ['A4', 44,  2],   ['G4', 46,  1.5], ['F4', 47.5,1.5], ['E4', 49,  5],
-  ['F4', 54,  2.5], ['G4', 56.5,1.5], ['A4', 58,  2],
-  ['G4', 60,  1.5], ['F4', 61.5,1.5], ['E4', 63,  2],
-  ['D4', 65,  1.5], ['C4', 66.5,7.5],
+  // Phrase 1
+  ['E5', 0,   2.5],
+  ['D5', 2.5, 1.5],
+  ['C5', 4,   4],
+  ['E5', 8,   2],
+  ['G5', 10,  1.5],
+  ['E5', 11.5,1.5],
+  ['D5', 13,  5],
+
+  // Phrase 2
+  ['C5', 18,  2.5],
+  ['B4', 20.5,1.5],
+  ['A4', 22,  4],
+  ['C5', 26,  2],
+  ['E5', 28,  1.5],
+  ['D5', 29.5,1.5],
+  ['C5', 31,  5],
+
+  // Phrase 3 — legèrement différente
+  ['A4', 36,  2.5],
+  ['B4', 38.5,1.5],
+  ['C5', 40,  4],
+  ['A4', 44,  2],
+  ['G4', 46,  1.5],
+  ['F4', 47.5,1.5],
+  ['E4', 49,  5],
+
+  // Phrase 4 — résolution
+  ['F4', 54,  2.5],
+  ['G4', 56.5,1.5],
+  ['A4', 58,  2],
+  ['G4', 60,  1.5],
+  ['F4', 61.5,1.5],
+  ['E4', 63,  2],
+  ['D4', 65,  1.5],
+  ['C4', 66.5,7.5],
 ];
 
+// Accompagnement (main gauche) — arpège doux
 function buildLH(root, mid, top, start, bars) {
   const out = [];
   for (let b = 0; b < bars * 3; b += 3) {
@@ -481,11 +515,11 @@ function buildLH(root, mid, top, start, bars) {
 }
 
 const LH = [
-  ...buildLH('C3','E3','G3',  0, 6),
-  ...buildLH('A3','C4','E4', 18, 6),
-  ...buildLH('F3','A3','C4', 36, 6),
-  ...buildLH('G3','B3','D4', 54, 6),
-  ...buildLH('C3','E3','G3', 72, 2),
+  ...buildLH('C3','E3','G3',  0, 6),  // Do  (phrases 1-2 début)
+  ...buildLH('A3','C4','E4', 18, 6),  // La m
+  ...buildLH('F3','A3','C4', 36, 6),  // Fa
+  ...buildLH('G3','B3','D4', 54, 6),  // Sol
+  ...buildLH('C3','E3','G3', 72, 2),  // Do final
 ];
 
 const LOOP_BEATS = 74;
@@ -493,11 +527,15 @@ const LOOP_BEATS = 74;
 function initAudio() {
   if (_ctx) return;
   _ctx = new (window.AudioContext || window.webkitAudioContext)();
+
+  // Volume principal
   _master = _ctx.createGain();
   _master.gain.value = 0.85;
-  const delay   = _ctx.createDelay(1.0);
-  const fbGain  = _ctx.createGain();
-  const wetGain = _ctx.createGain();
+
+  // Echo léger (sensation de salle)
+  const delay    = _ctx.createDelay(1.0);
+  const fbGain   = _ctx.createGain();
+  const wetGain  = _ctx.createGain();
   delay.delayTime.value = 0.28;
   fbGain.gain.value     = 0.22;
   wetGain.gain.value    = 0.18;
@@ -507,12 +545,15 @@ function initAudio() {
   delay.connect(wetGain);
   wetGain.connect(_ctx.destination);
   _master.connect(_ctx.destination);
+  _echo = delay;
 }
 
 function note(freq, when, durBeats, vol) {
   const durS = durBeats * BEAT;
   const g = _ctx.createGain();
-  [[1, 1.0], [2, 0.18], [3, 0.06]].forEach(([mult]) => {
+
+  // Harmoniques pour un timbre de piano doux
+  [[1, 1.0], [2, 0.18], [3, 0.06]].forEach(([mult, str]) => {
     const o = _ctx.createOscillator();
     o.type = 'sine';
     o.frequency.value = freq * mult;
@@ -520,10 +561,13 @@ function note(freq, when, durBeats, vol) {
     o.start(when);
     o.stop(when + durS * 5);
   });
+
+  // Enveloppe douce
   g.gain.setValueAtTime(0, when);
   g.gain.linearRampToValueAtTime(vol, when + 0.04);
   g.gain.setTargetAtTime(vol * 0.25, when + 0.05, 0.25);
   g.gain.exponentialRampToValueAtTime(0.0001, when + durS * 5);
+
   g.connect(_master);
 }
 
@@ -548,6 +592,7 @@ function stopPiano() {
   clearTimeout(_timer);
   if (_ctx) { _ctx.close(); _ctx = null; _master = null; }
 }
+
 
 /* ═══════════════════════════════════════════════
    ANIMATION SVG — stroke-dashoffset
@@ -601,6 +646,7 @@ function runAnimation() {
     document.getElementById('text-block').classList.add('visible');
   }, (last + 0.6) * 1000);
 }
+
 
 /* ═══════════════════════════════════════════════
    OUVERTURE DES RIDEAUX
